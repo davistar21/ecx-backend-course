@@ -67,7 +67,7 @@ const server = http.createServer((request, response)=>{
 
     if(request.url == '/users' && request.method == 'POST'){
         let body:User = {
-            "id": "0001",
+            "id": "0008",
             "name": "Gabrielle",
             "age": 90
         };
@@ -102,6 +102,7 @@ const server = http.createServer((request, response)=>{
     
 });
 server.listen(PORT, ()=>{
-    console.log(`Server is listening on port ${PORT}`)
+    console.log(`Server is listening on port ${PORT}`);
 });
+
 

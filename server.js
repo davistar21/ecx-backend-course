@@ -33,26 +33,6 @@ function writeDB(response, dataS) {
     });
 }
 ;
-// function removeUser(id:string, callback:(success: boolean) => void){
-//     readDB((users)=>{
-//         if (users){
-//             const updatedUsers = users.filter(user => user.id !== id);
-//             fs.writeFile('users.json', JSON.stringify(updatedUsers, null, 2), (err) => {
-//                 if (err) {
-//                     callback(false);
-//                     return;
-//                 }
-//                 callback(true);
-//             });
-//         }
-//     })
-// }
-// function addNewUser(callback: (user: User[])=>void){
-//     const newUser:User[] = JSON.parse(body);
-//     readDB((users)=>{
-//         users.push(newUser)
-//     })
-// }
 var server = http.createServer(function (request, response) {
     if (request.url == "/" && request.method == "GET") {
         response.end("Hello Not Oswald!");
@@ -74,31 +54,11 @@ var server = http.createServer(function (request, response) {
     if (request.url == "/age" && request.method == "GET") {
         readDB(function (users) {
             if (users) {
-                var userAges = users.map(function (user) { return user.age || user.name; });
+                var userAges = users.map(function (user) { return user.age; });
                 response.end(JSON.stringify(userAges));
             }
         });
     }
-    // if (request.method === "POST" && request.url === "/users"){
-    //     let body = '';
-    // 	request.on('data', (chunk) => {
-    // 		body += chunk.toString();
-    // 	});
-    //     request.on('end', ()=>{
-    //         const newUser = JSON.parse(body)
-    //     })
-    //     console.log("Hello World!");
-    //     response.end("Hello Oswald!")
-    //     fs.readFile("users.json", "utf-8", (err, data)=>{
-    //         if(err){
-    //             response.end(err);
-    //             return
-    //         };
-    //         let users = JSON.parse(data);
-    //         response.end(JSON.stringify(users));
-    //         response.end("Kardashian")
-    //     })
-    // };
     if (request.url == '/users' && request.method == 'POST') {
         var body_1 = {
             "id": "0001",
@@ -110,9 +70,6 @@ var server = http.createServer(function (request, response) {
         });
         request.on('end', function () {
             var newUser = JSON.parse(JSON.stringify(body_1));
-            // newUser.id = '00031';
-            // newUser.age = 12;
-            // newUser.name = "Shanice"
             readDB(function (users) {
                 if (users) {
                     users.push(newUser);
